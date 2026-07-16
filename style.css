@@ -1,0 +1,16 @@
+.slider{
+    display:flex;
+    overflow:hidden;
+
+    border-radius:24px;
+    box-shadow:0 10px 35px rgba(0,0,0,.25);
+}
+
+.slider img{
+    width:100%;
+    transition:.35s;
+}
+
+.slider img:hover{
+    transform:scale(1.04);
+}
