@@ -1,88 +1,99 @@
-document.querySelectorAll(".carousel").forEach(carousel => {
+const quantidadeImagens = 13;
 
-    const track = carousel.querySelector(".carousel-track");
-    const slides = carousel.querySelectorAll(".carousel-slide");
+const track = document.querySelector(".carousel-track");
 
-    const btnPrev = carousel.querySelector(".prev");
-    const btnNext = carousel.querySelector(".next");
+for(let i = 1; i <= quantidadeImagens; i++){
 
-    let currentIndex = 0;
-    let autoplay;
+    const slide = document.createElement("div");
 
-    function updateCarousel() {
-        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+    slide.className = "carousel-slide";
+
+    slide.innerHTML = `<img src="img/camisa${i}.jpg" alt="Camisa ${i}">`;
+
+    track.appendChild(slide);
+
+}
+
+const slides = document.querySelectorAll(".carousel-slide");
+
+let indice = 0;
+
+function atualizar(){
+
+    track.style.transform = `translateX(-${indice * 100}%)`;
+
+}
+
+function proximo(){
+
+    indice++;
+
+    if(indice >= slides.length){
+
+        indice = 0;
+
     }
 
-    function nextSlide() {
-        currentIndex++;
+    atualizar();
 
-        if (currentIndex >= slides.length) {
-            currentIndex = 0;
-        }
+}
 
-        updateCarousel();
+function anterior(){
+
+    indice--;
+
+    if(indice < 0){
+
+        indice = slides.length - 1;
+
     }
 
-    function prevSlide() {
-        currentIndex--;
+    atualizar();
 
-        if (currentIndex < 0) {
-            currentIndex = slides.length - 1;
-        }
+}
 
-        updateCarousel();
+document.querySelector(".next").onclick = proximo;
+
+document.querySelector(".prev").onclick = anterior;
+
+let autoplay = setInterval(proximo,3000);
+
+const carousel = document.querySelector(".carousel");
+
+carousel.addEventListener("mouseenter",()=>{
+
+    clearInterval(autoplay);
+
+});
+
+carousel.addEventListener("mouseleave",()=>{
+
+    autoplay = setInterval(proximo,3000);
+
+});
+
+let inicioX = 0;
+
+carousel.addEventListener("touchstart",(e)=>{
+
+    inicioX = e.touches[0].clientX;
+
+});
+
+carousel.addEventListener("touchend",(e)=>{
+
+    let fimX = e.changedTouches[0].clientX;
+
+    if(inicioX - fimX > 50){
+
+        proximo();
+
     }
 
-    btnNext.addEventListener("click", () => {
-        nextSlide();
-        restartAutoplay();
-    });
+    if(fimX - inicioX > 50){
 
-    btnPrev.addEventListener("click", () => {
-        prevSlide();
-        restartAutoplay();
-    });
+        anterior();
 
-    function startAutoplay() {
-        autoplay = setInterval(nextSlide, 3500);
     }
-
-    function stopAutoplay() {
-        clearInterval(autoplay);
-    }
-
-    function restartAutoplay() {
-        stopAutoplay();
-        startAutoplay();
-    }
-
-    carousel.addEventListener("mouseenter", stopAutoplay);
-    carousel.addEventListener("mouseleave", startAutoplay);
-
-    // Swipe para celular
-
-    let startX = 0;
-
-    carousel.addEventListener("touchstart", e => {
-        startX = e.touches[0].clientX;
-    });
-
-    carousel.addEventListener("touchend", e => {
-
-        const endX = e.changedTouches[0].clientX;
-
-        if (startX - endX > 50) {
-            nextSlide();
-            restartAutoplay();
-        }
-
-        if (endX - startX > 50) {
-            prevSlide();
-            restartAutoplay();
-        }
-
-    });
-
-    startAutoplay();
 
 });
