@@ -1,16 +1,113 @@
-.slider{
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    background:transparent;
+
     display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:40px;
+
+}
+
+.carousel{
+
+    position:relative;
+
+    width:100%;
+
+    max-width:1100px;
+
     overflow:hidden;
 
-    border-radius:24px;
-    box-shadow:0 10px 35px rgba(0,0,0,.25);
+    border-radius:22px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.35);
+
 }
 
-.slider img{
+.carousel-window{
+
+    overflow:hidden;
+
+}
+
+.carousel-track{
+
+    display:flex;
+
+    transition:transform .6s ease;
+
+}
+
+.carousel-slide{
+
+    min-width:100%;
+
+}
+
+.carousel-slide img{
+
     width:100%;
-    transition:.35s;
+
+    height:600px;
+
+    object-fit:cover;
+
+    display:block;
+
 }
 
-.slider img:hover{
-    transform:scale(1.04);
+.btn{
+
+    position:absolute;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:50px;
+
+    height:50px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:rgba(0,0,0,.5);
+
+    color:white;
+
+    font-size:28px;
+
+    cursor:pointer;
+
+    z-index:5;
+
+}
+
+.prev{
+
+    left:15px;
+
+}
+
+.next{
+
+    right:15px;
+
+}
+
+.btn:hover{
+
+    background:black;
+
 }
